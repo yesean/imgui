@@ -239,19 +239,7 @@ if(IMGUI_ENABLE_FREETYPE)
   target_sources(
     imgui-freetype INTERFACE ${IMGUI_MISC_DIR}/freetype/imgui_freetype.h
                              ${IMGUI_MISC_DIR}/freetype/imgui_freetype.cpp)
-
-  find_package(Freetype)
-  if(FREETYPE_FOUND)
-    target_include_directories(imgui-freetype
-                               INTERFACE ${FREETYPE_INCLUDE_DIRS})
-    target_link_libraries(imgui-freetype INTERFACE ${FREETYPE_LIBRARIES})
-  elseif(EXISTS ../freetype)
-    set(SKIP_INSTALL_ALL ON)
-    add_subdirectory(../freetype ${CMAKE_BINARY_DIR}/freetype)
-    target_link_libraries(imgui-freetype INTERFACE freetype)
-  else()
-    message(FATAL_ERROR "IMGUI_ENABLE_FREETYPE but FreeType was not found.")
-  endif()
+  target_link_libraries(imgui-freetype INTERFACE freetype)
   target_compile_definitions(imgui-freetype INTERFACE -DIMGUI_ENABLE_FREETYPE=1)
   target_link_libraries(imgui INTERFACE imgui-freetype)
 endif()
